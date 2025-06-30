@@ -41,21 +41,26 @@ export const checkAuthentication = async (req, _, next) => {
   try {
     const authHeader = req.headers["authorization"];
 
-    if (authHeader && authHeader.startsWith("Bearer ")) {
-      const token = authHeader.split(" ")[1];
-      const userService = new UserService();
-      const response = await userService.isAuthenticated(token);
-
-      if (response) {
-        req.user = response;
-        next();
-      }
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      throw new AppError(StatusCodes.BAD_REQUEST, "Authentication Failed", [
+        "Missing or malformed JWT token",
+      ]);
     }
-    throw new AppError(StatusCodes.BAD_REQUEST, "Authentication Failed", [
-      "Missing JWT token",
-    ]);
+
+    const token = authHeader.split(" ")[1];
+    const userService = new UserService();
+    const response = await userService.isAuthenticated(token);
+
+    if (!response) {
+      throw new AppError(StatusCodes.UNAUTHORIZED, "Invalid token", [
+        "Token verification failed",
+      ]);
+    }
+
+    req.user = response;
+    next();
   } catch (error) {
-    next(error);
+    next(error); 
   }
 };
 
