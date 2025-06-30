@@ -2,6 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import BaseError from "../errors/base.error.js";
 
 const errorHandler = (err, _, res, next) => {
+  console.log(err);
   if (err instanceof BaseError) {
     return res.status(err.statusCode).json({
       success: false,
