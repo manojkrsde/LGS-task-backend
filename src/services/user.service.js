@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import { generateToken, checkPassword } from "../utils/auth.js";
+import { generateToken, checkPassword, verifyToken } from "../utils/auth.js";
 
 import AppError from "../errors/app.error.js";
 import UserRepository from "../repository/user.repository.js";
@@ -22,7 +22,9 @@ class UserService {
 
       const user = await this.userRepository.create(data);
       const token = generateToken({ id: user.id, email: user.email });
-      return token;
+      const { exp } = verifyToken(token);
+      const expiresAt = new Date(exp * 1000);
+      return { token, exp, expiresAt };
     } catch (error) {
       this.handleSequelizeError(error);
       throw new Error("Cannot register a new user");
@@ -46,7 +48,9 @@ class UserService {
       }
 
       const token = generateToken({ id: user.id });
-      return token;
+      const { exp } = verifyToken(token);
+      const expiresAt = new Date(exp * 1000);
+      return { token, exp, expiresAt };
     } catch (error) {
       this.handleSequelizeError(error);
       throw new Error("Cannot sign in user");
@@ -63,6 +67,32 @@ class UserService {
         "Validation failed",
         explanation
       );
+    }
+  }
+
+  async isAuthenticated(token) {
+    try {
+      if (!token) {
+        throw new AppError(StatusCodes.BAD_REQUEST, "Authentication Failed", [
+          "Missing JWT token",
+        ]);
+      }
+      return verifyToken(token);
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+
+      // JWT-specific errors
+      const jwtErrors = {
+        JsonWebTokenError: "Invalid JWT token",
+        TokenExpiredError: "JWT token expired",
+      };
+
+      if (jwtErrors[error.name]) {
+        throw new AppError(StatusCodes.BAD_REQUEST, "Authentication Failed", [
+          jwtErrors[error.name],
+        ]);
+      }
+      throw new InternalServerError("Authentication failed");
     }
   }
 }

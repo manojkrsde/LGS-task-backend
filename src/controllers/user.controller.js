@@ -16,7 +16,7 @@ class UserController {
       res.status(StatusCodes.CREATED).json({
         success: true,
         message: "User registered successfully!",
-        data: { token },
+        data: token,
         error: {},
       });
     } catch (error) {
@@ -32,7 +32,7 @@ class UserController {
       res.status(StatusCodes.OK).json({
         success: true,
         message: "Login successful",
-        data: { token },
+        data: token,
         error: {},
       });
     } catch (error) {
