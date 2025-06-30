@@ -3,6 +3,10 @@ import { Model } from "sequelize";
 export default (sequelize, DataTypes) => {
   class Book extends Model {
     static associate(models) {
+      Book.belongsTo(models.User, {
+        foreignKey: "user_id",
+        as: "user",
+      });
     }
   }
 

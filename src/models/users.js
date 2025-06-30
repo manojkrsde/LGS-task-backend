@@ -2,7 +2,13 @@ import { Model } from "sequelize";
 
 export default (sequelize, DataTypes) => {
   class User extends Model {
-    static associate(models) {}
+    static associate(models) {
+      //one to many relationship
+      User.hasMany(models.Book, {
+        foreignKey: "user_id",
+        as: "books",
+      });
+    }
   }
 
   User.init(
