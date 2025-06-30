@@ -4,7 +4,7 @@ class BaseError extends Error {
     this.name = name;
     this.statusCode = statusCode;
     this.message = message;
-    this.details = data;
+    this.data = data;
   }
 }
 
