@@ -16,6 +16,8 @@ const config = {
 
   //authentication related
   SALT_ROUNDS: process.env.SALT_ROUNDS || "8",
+  JWT_EXPIRY: process.env.JWT_EXPIRY || "1d",
+  JWT_SECRET: process.env.JWT_SECRET || "your@secret@key",
 };
 
 export default config;

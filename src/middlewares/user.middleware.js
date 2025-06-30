@@ -4,7 +4,7 @@ import AppError from "../errors/app.error.js";
 
 const getMissingFields = (fields, reqBody) =>
   fields
-    .filter((field) => !reqBody[field])
+    .filter((field) => !reqBody?.[field])
     .map((field) => `${field} is missing in the request`);
 
 export const validateRegisterRequest = (req, _, next) => {
@@ -20,6 +20,8 @@ export const validateRegisterRequest = (req, _, next) => {
       missingFields
     );
   }
+
+  
 
   next();
 };

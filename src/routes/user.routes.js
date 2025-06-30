@@ -5,14 +5,14 @@ import {
   validateRegisterRequest,
   validateLoginRequest,
 } from "../middlewares/user.middleware.js";
-import UserController from "../controllers/user.controller.js";
+import userController from "../controllers/user.controller.js";
 
 const userRouter = express.Router();
 
 userRouter.get("/ping", pingCheck("User API is live..."));
 
-userRouter.post("/register", validateRegisterRequest, UserController.register);
+userRouter.post("/register", validateRegisterRequest, userController.register);
 
-userRouter.post("/login", validateLoginRequest, UserController.login);
+userRouter.post("/login", validateLoginRequest, userController.login);
 
 export default userRouter;

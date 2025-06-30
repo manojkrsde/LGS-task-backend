@@ -1,25 +1,31 @@
-import { StatusCodes } from "http-status-codes";
-import NotImplementedError from "../errors/notImplemented.error";
-
 class CrudRepository {
-  async create(data) {
-    throw new NotImplementedError("create @ crud.repository.js");
+  constructor(model) {
+    this.model = model;
   }
 
-  async destroy(data) {
-    throw new NotImplementedError("destroy @ crud.repository.js");
+  async create(data) {
+    const response = await this.model.create(data);
+    return response;
+  }
+
+  async destroy(id) {
+    const response = await this.model.destroy({ where: { id: id } });
+    return response;
   }
 
   async get(id) {
-    throw new NotImplementedError("get @ crud.repository.js");
+    const response = await this.model.findByPk(id);
+    return response;
   }
 
-  async getAll() {
-    throw new NotImplementedError("getAll @ crud.repository.js");
+  async getAll(query) {
+    const response = await this.model.findAll(query);
+    return response;
   }
 
   async update(key, data) {
-    throw new NotImplementedError("update @ crud.repository.js");
+    const response = await this.model.update(data, { where: { id: key } });
+    return response;
   }
 }
 
