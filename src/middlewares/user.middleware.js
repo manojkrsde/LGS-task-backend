@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import AppError from "../errors/app.error.js";
 import UserService from "../services/user.service.js";
 
-const getMissingFields = (fields, reqBody) =>
+export const getMissingFields = (fields, reqBody) =>
   fields
     .filter((field) => !reqBody?.[field])
     .map((field) => `${field} is missing in the request`);

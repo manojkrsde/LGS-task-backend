@@ -23,6 +23,11 @@ class CrudRepository {
     return response;
   }
 
+  async getAndCountAll(query) {
+    const response = await this.model.findAndCountAll(query);
+    return response;
+  }
+
   async update(key, data) {
     const response = await this.model.update(data, { where: { id: key } });
     return response;
