@@ -1,12 +1,14 @@
 import express from "express";
 import config from "./config/server.config.js";
+import pingCheck from "./controllers/ping.controller.js";
+import apiRouter from "./routes/index.js";
 
 const app = express();
 
 // Root health check route
-app.get("/", (_, res) => {
-  res.json({ message: "Server is live!" });
-});
+app.get("/ping", pingCheck("Server is live..."));
+
+app.use("/api", apiRouter);
 
 // Start server
 app.listen(config.PORT, () => {
