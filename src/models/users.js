@@ -1,5 +1,8 @@
 import { Model } from "sequelize";
 
+import bcrypt from "bcrypt";
+import config from "../config/server.config.js";
+
 export default (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
@@ -41,6 +44,15 @@ export default (sequelize, DataTypes) => {
       timestamps: true,
     }
   );
+
+  //Hooks to encrypt password
+  User.beforeCreate(function encrypt(user) {
+    const encryptedPassword = bcrypt.hashSync(
+      user.password,
+      +config.SALT_ROUNDS
+    ); //type casting through +
+    user.password = encryptedPassword;
+  });
 
   return User;
 };

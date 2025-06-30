@@ -13,6 +13,9 @@ const config = {
   DB_HOSTNAME: process.env.DB_HOSTNAME || "127.0.0.1",
   DB_PORT: process.env.DB_PORT || 5432,
   DB_DIALECT: process.env.DB_DIALECT || "postgres",
+
+  //authentication related
+  SALT_ROUNDS: process.env.SALT_ROUNDS || "8",
 };
 
 export default config;
