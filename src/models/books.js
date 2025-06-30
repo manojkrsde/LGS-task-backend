@@ -30,6 +30,15 @@ export default (sequelize, DataTypes) => {
       tableName: "books",
       underscored: true,
       timestamps: true,
+      createdAt:"created_at",
+      updatedAt:"updated_at",
+      indexes: [
+        {
+          unique: true,
+          fields: ["user_id", "title"],
+          name: "unique_user_book_title",
+        },
+      ],
     }
   );
 
