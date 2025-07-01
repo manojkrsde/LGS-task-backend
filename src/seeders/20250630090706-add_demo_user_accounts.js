@@ -8,14 +8,14 @@ export default {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("users", [
       {
-        name: "Demo",
+        name: "Demo Account",
         email: "demo@gmail.com",
         password: bcrypt.hashSync("123456", +config.SALT_ROUNDS),
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
-        name: "User",
+        name: "User Account",
         email: "user@gmail.com",
         password: bcrypt.hashSync("123456", +config.SALT_ROUNDS),
         created_at: new Date(),

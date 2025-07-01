@@ -31,13 +31,13 @@ class BooksService {
 
   async getAllBooks(queryParams, user) {
     try {
-      const { sort = "", pageNumber = "1", pageSize = "10" } = queryParams;
+      const { sort = "", pageNumber = "1", pageSize = "5" } = queryParams;
 
       const page = parseInt(pageNumber);
       const size = parseInt(pageSize);
 
       const validPage = !isNaN(page) && page > 0 ? page : 1;
-      const validSize = !isNaN(size) && size > 0 ? size : 30;
+      const validSize = !isNaN(size) && size > 0 ? size : 5;
 
       const offset = (validPage - 1) * validSize;
       const limit = validSize;

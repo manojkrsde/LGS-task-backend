@@ -1,7 +1,11 @@
 import { StatusCodes } from "http-status-codes";
 
 import AppError from "../errors/app.error.js";
-import {getMissingFields} from "./user.middleware.js";
+
+const getMissingFields = (fields, reqBody) =>
+  fields
+    .filter((field) => !reqBody?.[field])
+    .map((field) => `${field} is missing in the request`);
 
 
 export const validateCreateBookRequest = (req, _, next) => {
