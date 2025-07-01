@@ -1,6 +1,6 @@
 # 📖 Books - BACKEND | NODEJS + EXPRESS + POSTGRES + SEQUELIZE
 
-**`Live Preview of Frontend`** : 
+**`Live Preview of Frontend`** : https://lgs-task-frontend-6izn.vercel.app/login
 
 - DUMMY ACCOUNT FOR TESTING:
 
