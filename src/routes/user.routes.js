@@ -1,3 +1,15 @@
+/**
+ * User Routes
+ * -----------
+ * Handles all user-related routes including:
+ * - Health check (`GET /ping`)
+ * - User registration with validation (`POST /register`)
+ * - User login with credential validation (`POST /login`)
+ * - JWT token verification (`POST /verify`)
+ *
+ * All routes are publicly accessible and include necessary middleware checks for request validity.
+ */
+
 import express from "express";
 
 import pingCheck from "../controllers/ping.controller.js";

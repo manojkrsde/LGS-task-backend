@@ -1,17 +1,20 @@
 import { StatusCodes } from "http-status-codes";
 import UserService from "../services/user.service.js";
 
+/**
+ * Controller for handling user-related operations such as registration, login, and token verification.
+ */
 class UserController {
   userService = new UserService();
 
+  /**
+   * Handles user registration.
+   * Expects `name`, `email`, and `password` in the request body.
+   */
   register = async (req, res, next) => {
     try {
       const { name, email, password } = req.body || {};
-      const token = await this.userService.createUser({
-        name,
-        email,
-        password,
-      });
+      const token = await this.userService.createUser({ name, email, password });
 
       res.status(StatusCodes.CREATED).json({
         success: true,
@@ -24,6 +27,10 @@ class UserController {
     }
   };
 
+  /**
+   * Handles user login.
+   * Expects `email` and `password` in the request body.
+   */
   login = async (req, res, next) => {
     try {
       const { email, password } = req.body || {};
@@ -40,6 +47,10 @@ class UserController {
     }
   };
 
+  /**
+   * Verifies the provided JWT token.
+   * Expects `token` in the request body.
+   */
   verifyToken = async (req, res, next) => {
     try {
       const { token } = req.body || {};

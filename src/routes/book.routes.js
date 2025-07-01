@@ -1,3 +1,17 @@
+/**
+ * Book Routes
+ * -----------
+ * Handles all book-related operations for authenticated users:
+ * - Health check (`GET /ping`)
+ * - Fetch all books with pagination and sorting (`GET /`)
+ * - Create a new book with validation (`POST /`)
+ * - Get a specific book by ID (`GET /:id`)
+ * - Update an existing book with validation (`PUT /:id`)
+ * - Delete a book by ID (`DELETE /:id`)
+ *
+ * All routes are protected by JWT-based authentication (`checkAuthentication` middleware).
+ */
+
 import express from "express";
 
 import pingCheck from "../controllers/ping.controller.js";
