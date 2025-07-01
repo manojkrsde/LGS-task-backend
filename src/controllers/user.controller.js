@@ -39,6 +39,22 @@ class UserController {
       next(error);
     }
   };
+
+  verifyToken = async (req, res, next) => {
+    try {
+      const { token } = req.body || {};
+      const response = await this.userService.verifyToken(token);
+
+      res.status(StatusCodes.OK).json({
+        success: true,
+        message: "Token verified",
+        data: response,
+        error: {},
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default new UserController();

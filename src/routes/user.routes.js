@@ -15,4 +15,6 @@ userRouter.post("/register", validateRegisterRequest, userController.register);
 
 userRouter.post("/login", validateLoginRequest, userController.login);
 
+userRouter.post("/verify", userController.verifyToken);
+
 export default userRouter;

@@ -21,10 +21,10 @@ class UserService {
       }
 
       const user = await this.userRepository.create(data);
-      const token = generateToken({ id: user.id, email: user.email });
+      const token = generateToken({ id: user.id, email: user.email ,name:user.name});
       const { exp } = verifyToken(token);
       const expiresAt = new Date(exp * 1000);
-      return { token, exp, expiresAt };
+      return { token, exp, expiresAt ,name:user.name};
     } catch (error) {
       this.handleSequelizeError(error);
       throw new Error("Cannot register a new user");
@@ -47,10 +47,22 @@ class UserService {
         ]);
       }
 
-      const token = generateToken({ id: user.id });
+      const token = generateToken({ id: user.id,email: user.email,name:user.name });
       const { exp } = verifyToken(token);
       const expiresAt = new Date(exp * 1000);
-      return { token, exp, expiresAt };
+      return { token, exp, expiresAt,name:user.name };
+    } catch (error) {
+      this.handleSequelizeError(error);
+      throw new Error("Cannot sign in user");
+    }
+  }
+
+  async verifyToken(token) {
+    try {
+      if(!token) throw new AppError(StatusCodes.BAD_REQUEST,"Token not found!",[]);
+      const { exp,name } = verifyToken(token);
+      const expiresAt = new Date(exp * 1000);
+      return { token, exp, expiresAt,name };
     } catch (error) {
       this.handleSequelizeError(error);
       throw new Error("Cannot sign in user");

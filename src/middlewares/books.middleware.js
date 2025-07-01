@@ -6,7 +6,7 @@ import {getMissingFields} from "./user.middleware.js";
 
 export const validateCreateBookRequest = (req, _, next) => {
   const missingFields = getMissingFields(
-    ["user_id", "title", "description"],
+    ["title", "description"],
     req.body
   );
 

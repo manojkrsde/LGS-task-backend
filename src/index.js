@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 
 import config from "./config/server.config.js";
 import pingCheck from "./controllers/ping.controller.js";
@@ -6,6 +7,9 @@ import apiRouter from "./routes/index.js";
 import errorHandler from "./utils/error.handler.js";
 
 const app = express();
+
+//cors middleware
+app.use(cors());
 
 //body parsing middlewares
 app.use(express.urlencoded({ extended: true }));

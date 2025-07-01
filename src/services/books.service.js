@@ -11,13 +11,7 @@ class BooksService {
 
   async createBook(data, user) {
     try {
-      if (user.id != +data.user_id) {
-        throw new AppError(StatusCodes.UNAUTHORIZED, "Unauthroized user", [
-          `Trying to access other users books is not allowed`,
-        ]);
-      }
-
-      const response = await this.booksRepository.create(data);
+      const response = await this.booksRepository.create({...data,user_id:user.id});
       return response;
     } catch (error) {
       this.handleSequelizeError(error);
@@ -27,12 +21,7 @@ class BooksService {
 
   async updateBook(data, user, bookId) {
     try {
-      if (user.id != +data.user_id) {
-        throw new AppError(StatusCodes.UNAUTHORIZED, "Unauthroized user", [
-          `Trying to update other users books is not allowed`,
-        ]);
-      }
-      const response = await this.booksRepository.update(bookId, data);
+      const response = await this.booksRepository.update(bookId, {...data,user_id:user.id});
       return response;
     } catch (error) {
       this.handleSequelizeError(error);
